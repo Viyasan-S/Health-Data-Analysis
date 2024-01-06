@@ -79,13 +79,11 @@ if st.button("Visualize Prediction Impact"):
     scenario_df["Total Doses"] = scenario_df.sum(axis=1)
 
     # Visualize the impact using a bar chart
-    fig, ax = plt.subplots(figsize=(8, 4))
+    plt.figure(figsize=(8, 4))
     sns.barplot(x=scenario_df.columns[:-1], y=scenario_df.iloc[0, :-1])
     plt.title("Impact on Total Doses")
+    st.pyplot(plt.gcf())
 
-    # Display the chart using st.plotly_chart
-    st.plotly_chart(fig)
-    
     # Show the new total doses prediction
     st.write(f"Predicted Total Doses for the scenario: {scenario_df['Total Doses'].values[0]:,.0f}")
 
