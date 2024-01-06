@@ -69,19 +69,23 @@ st.write(f"Predicted Dose for 18-44 years: {prediction[0]:,.0f}")
 st.subheader("Dynamic Visualization:")
 if st.button("Visualize Prediction Impact"):
     # Create a hypothetical scenario dataframe
-    scenario_df = pd.DataFrame({"Healthcare Workers Dose": [hcw_dose],
-                                "Frontline Workers Dose": [flw_dose],
-                                "45+ Years Dose": [age45_dose]})
+    scenario_df = pd.DataFrame({
+        "Healthcare Workers Dose": [hcw_dose],
+        "Frontline Workers Dose": [flw_dose],
+        "45+ Years Dose": [age45_dose]
+    })
 
     # Predict the impact on total doses
     scenario_df["Total Doses"] = scenario_df.sum(axis=1)
-    
+
     # Visualize the impact using a bar chart
-    plt.figure(figsize=(8, 4))
+    fig, ax = plt.subplots(figsize=(8, 4))
     sns.barplot(x=scenario_df.columns[:-1], y=scenario_df.iloc[0, :-1])
     plt.title("Impact on Total Doses")
-    st.pyplot()
 
+    # Display the chart using st.plotly_chart
+    st.plotly_chart(fig)
+    
     # Show the new total doses prediction
     st.write(f"Predicted Total Doses for the scenario: {scenario_df['Total Doses'].values[0]:,.0f}")
 
